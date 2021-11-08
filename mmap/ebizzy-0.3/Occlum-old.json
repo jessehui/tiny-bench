@@ -3,8 +3,7 @@
         "user_space_size": "1280MB",
         "kernel_space_heap_size": "100MB",
         "kernel_space_stack_size": "10MB",
-        "min_num_of_cpus": 1,
-        "max_num_of_cpus": 128
+        "max_num_of_threads": 32
     },
     "process": {
         "default_stack_size": "4MB",
@@ -16,13 +15,10 @@
     ],
     "env": {
         "default": [
-            "OCCLUM=yes",
-            "STABLE=yes",
-            "OVERRIDE=N"
+            "OCCLUM=yes"
         ],
         "untrusted": [
-            "TEST",
-            "OVERRIDE"
+            "EXAMPLE"
         ]
     },
     "metadata": {
@@ -58,14 +54,6 @@
             "source": "."
         },
         {
-            "target": "/tmp",
-            "type": "sefs",
-            "source": "./run/mount/tmp",
-            "options": {
-                "temporary": true
-            }
-        },
-        {
             "target": "/proc",
             "type": "procfs"
         },
@@ -75,4 +63,3 @@
         }
     ]
 }
-

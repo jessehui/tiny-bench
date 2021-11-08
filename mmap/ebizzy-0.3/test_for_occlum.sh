@@ -1,14 +1,13 @@
 #! /bin/bash
 
+make
 if [ ! -d occlum_instance ]; then
-	make
 	occlum new occlum_instance
-	cp ebizzy occlum_instance/image/bin
-	cp Occlum.json occlum_instance
-	cd occlum_instance && occlum build
-else
-	cd occlum_instance && occlum build -f
 fi
+
+cp ebizzy occlum_instance/image/bin
+cp Occlum.json occlum_instance
+cd occlum_instance && occlum build -f
 
 THREAD_MAX=8
 for j in $(eval echo "{1..$THREAD_MAX}")

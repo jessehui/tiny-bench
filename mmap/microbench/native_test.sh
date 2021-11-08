@@ -1,13 +1,27 @@
 #! /bin/bash
-occlum-gcc -o mmap main.c
-count=1
-t1=$(date +%s%N)
+
+occlum-gcc -o mmap mmap.c -lpthread
+if [ -z "$PNUM" ]; then
+	count=1
+else
+	count=$PNUM
+fi
+
 for i in $(seq 1 $count)
 do
-	 ./mmap
+	 ./mmap $@ &
 done
-t2=$(date +%s%N)
-((t = ($t2 - $t1) / 1000000))
-echo "Time for all test is $t ms for $count operations."
-((t = t / $count))
-echo "Time for mmap test is $t ms/op"
+
+for job in `jobs -p`
+do
+    wait $job || let "FAIL+=1"
+done
+
+
+
+if [ -z "$FAIL" ];
+then
+echo "Done!"
+else
+echo "FAIL! ($FAIL)"
+fi
